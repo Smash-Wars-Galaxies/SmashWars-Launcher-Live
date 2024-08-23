@@ -1,40 +1,73 @@
 {
-  "name": "smashswg-launcher",
-  "version": "0.0.1",
-  "description": "Launcher and Patcher for Smashley's SWG Server",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron-forge start",
-    "build": "electron-packager . SWGLauncher --platform=win32 --arch=x64 --out=build --overwrite",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/InfiniteAxis/SmashSWG-Launcher.git"
-  },
-  "keywords": [
-    "launcher",
-    "swgemu"
-  ],
-  "author": "InfiniteAxis",
-  "license": "CC0-1.0",
-  "bugs": {
-    "url": "https://github.com/InfiniteAxis/SmashSWG-Launcher/issues"
-  },
-  "homepage": "https://github.com/InfiniteAxis/SmashSWG-Launcher#readme",
-  "devDependencies": {
-    "@electron-forge/cli": "^7.4.0",
-    "@electron-forge/maker-deb": "^7.4.0",
-    "@electron-forge/maker-rpm": "^7.4.0",
-    "@electron-forge/maker-squirrel": "^7.4.0",
-    "@electron-forge/maker-zip": "^7.4.0",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
-    "@electron-forge/plugin-fuses": "^7.4.0",
-    "@electron/fuses": "^1.8.0",
-    "electron": "^32.0.1"
-  },
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
-  }
+	"name": "smashswg-launcher",
+	"version": "0.0.1",
+	"description": "Launcher and Patcher for Smashley's SWG Server",
+	"main": "main.js",
+	"scripts": {
+		"start": "electron-forge start",
+		"build": "electron-packager . SWGLauncher --platform=win32 --arch=x64 --out=build --overwrite",
+		"package": "electron-forge package",
+		"make": "electron-forge make"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/InfiniteAxis/SmashSWG-Launcher.git"
+	},
+	"keywords": [
+		"launcher",
+		"swgemu"
+	],
+	"author": "InfiniteAxis",
+	"license": "CC0-1.0",
+	"bugs": {
+		"url": "https://github.com/InfiniteAxis/SmashSWG-Launcher/issues"
+	},
+	"homepage": "https://github.com/InfiniteAxis/SmashSWG-Launcher#readme",
+	"devDependencies": {
+		"@electron-forge/cli": "^7.4.0",
+		"@electron-forge/maker-deb": "^7.4.0",
+		"@electron-forge/maker-rpm": "^7.4.0",
+		"@electron-forge/maker-squirrel": "^7.4.0",
+		"@electron-forge/maker-zip": "^7.4.0",
+		"@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+		"@electron-forge/plugin-fuses": "^7.4.0",
+		"@electron/fuses": "^1.8.0",
+		"electron": "^32.0.1",
+		"electron-builder": "^24.9.1"
+	},
+	"dependencies": {
+		"adm-zip": "^0.5.5",
+		"electron-is-dev": "^0.2.0",
+		"electron-log": "^4.3.1",
+		"electron-updater": "^4.3.5",
+		"follow-redirects": "^1.13.2",
+		"mkdirp": "^1.0.4",
+		"node": "^15.8.0",
+		"npm": "^7.5.4",
+		"random-access-file": "^2.1.5",
+		"request": "^2.88.2",
+		"electron-squirrel-startup": "^1.0.1"
+	},
+	"config": {
+		"forge": {
+			"packagerConfig": {
+				"icon": "./path/to/your/icon.ico",
+				"asar": true
+			},
+			"makers": [
+				{
+					"name": "@electron-forge/maker-squirrel",
+					"config": {
+						"name": "your_app_name"
+					}
+				},
+				{
+					"name": "@electron-forge/maker-zip",
+					"platforms": [
+						"win32"
+					]
+				}
+			]
+		}
+	}
 }
