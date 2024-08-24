@@ -58,13 +58,14 @@
 				{
 					"name": "@electron-forge/maker-squirrel",
 					"config": {
-						"name": "your_app_name"
+						"name": "Smash Wars Galaxies Launcher"
 					}
 				},
 				{
 					"name": "@electron-forge/maker-zip",
 					"platforms": [
-						"win32"
+						"win32",
+						"linux"
 					]
 				}
 			]
