@@ -5,8 +5,8 @@
 	"main": "main.js",
 	"scripts": {
 		"start": "electron .",
-		"build": "electron-builder --win --ia32 -p never",
-		"deploy": "electron-builder --win --ia32 -p always"
+		"build": "electron-builder --dir --win",
+		"deploy": "electron-builder --win --publish always --ia32"
 	},
 	"repository": {
 		"type": "git",
@@ -23,18 +23,16 @@
 	},
 	"homepage": "https://github.com/InfiniteAxis/SmashSWG-Launcher#readme",
 	"devDependencies": {
-		"electron": "^11.5.0",
-		"electron-builder": "^24.9.1"
+		"electron": "^32.0.1",
+		"electron-builder": "^24.13.3"
 	},
 	"dependencies": {
-		"adm-zip": "^0.5.5",
+		"adm-zip": "^0.5.15",
 		"electron-is-dev": "^0.2.0",
 		"electron-log": "^4.3.1",
-		"electron-updater": "^4.3.5",
+		"electron-updater": "^6.3.4",
 		"follow-redirects": "^1.13.2",
 		"mkdirp": "^1.0.4",
-		"node": "^20.8.0",
-		"npm": "^7.5.4",
 		"random-access-file": "^2.1.5",
 		"request": "^2.88.2"
 	},
@@ -50,5 +48,6 @@
 		"nsis": {
 			"perMachine": true
 		}
-	}
+	},
+	"postinstall": "electron-builder install-app-deps"
 }

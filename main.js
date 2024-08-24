@@ -41,7 +41,7 @@ function createWindow() {
 			enableRemoteModule: true,
 			webviewTag: true
 		},
-    		icon: path.join(__dirname, 'img/infinity_launcher_logo_icon.ico')
+    		icon: path.join(__dirname, 'img/logo_icon.ico')
   	});
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'index.html'),

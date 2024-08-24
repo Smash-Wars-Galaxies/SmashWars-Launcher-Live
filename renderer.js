@@ -11,15 +11,10 @@ const path = require('path');
 const log = require('electron-log');
 
 const playBtn = document.getElementById('play');
-const settingsBtn = document.getElementById('settings');
 const websiteBtn = document.getElementById('web');
 const discordBtn = document.getElementById('disc');
-const donateBtn = document.getElementById('donate');
-const skillcalcBtn = document.getElementById('skillcalc');
-const newsHeader = document.getElementById('newsheader');
 
 const rightContent = document.getElementById('rightcontent');
-const rightSettings = document.getElementById('rightsettings');
 const folderBox = document.getElementById('folder');
 const browseBtn = document.getElementById('browse');
 const installBtn = document.getElementById('install');
