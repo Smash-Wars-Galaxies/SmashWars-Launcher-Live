@@ -4,10 +4,9 @@
 	"description": "Launcher and Patcher for Smashley's SWG Server",
 	"main": "main.js",
 	"scripts": {
-		"start": "electron-forge start",
-		"build": "electron-packager . SWGLauncher --platform=win32 --arch=x64 --out=build --overwrite",
-		"package": "electron-forge package",
-		"make": "electron-forge make"
+		"start": "electron .",
+		"build": "electron-builder --win --ia32 -p never",
+		"deploy": "electron-builder --win --ia32 -p always"
 	},
 	"repository": {
 		"type": "git",
