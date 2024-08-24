@@ -24,15 +24,7 @@
 	},
 	"homepage": "https://github.com/InfiniteAxis/SmashSWG-Launcher#readme",
 	"devDependencies": {
-		"@electron-forge/cli": "^7.4.0",
-		"@electron-forge/maker-deb": "^7.4.0",
-		"@electron-forge/maker-rpm": "^7.4.0",
-		"@electron-forge/maker-squirrel": "^7.4.0",
-		"@electron-forge/maker-zip": "^7.4.0",
-		"@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
-		"@electron-forge/plugin-fuses": "^7.4.0",
-		"@electron/fuses": "^1.8.0",
-		"electron": "^32.0.1",
+		"electron": "^11.5.0",
 		"electron-builder": "^24.9.1"
 	},
 	"dependencies": {
@@ -42,33 +34,21 @@
 		"electron-updater": "^4.3.5",
 		"follow-redirects": "^1.13.2",
 		"mkdirp": "^1.0.4",
-		"node": "^15.8.0",
+		"node": "^20.8.0",
 		"npm": "^7.5.4",
 		"random-access-file": "^2.1.5",
-		"request": "^2.88.2",
-		"electron-squirrel-startup": "^1.0.1"
+		"request": "^2.88.2"
 	},
-	"config": {
-		"forge": {
-			"packagerConfig": {
-				"icon": "./path/to/your/icon.ico",
-				"asar": true
-			},
-			"makers": [
-				{
-					"name": "@electron-forge/maker-squirrel",
-					"config": {
-						"name": "Smash Wars Galaxies Launcher"
-					}
-				},
-				{
-					"name": "@electron-forge/maker-zip",
-					"platforms": [
-						"win32",
-						"linux"
-					]
-				}
-			]
-		}
-	}
+	"build": {
+    "productName": "Smash Wars Galaxy Launcher",
+    "win": {
+      "requestedExecutionLevel": "highestAvailable",
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "nsis": {
+      "perMachine": true
+    }
 }
