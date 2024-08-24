@@ -40,15 +40,16 @@
 		"request": "^2.88.2"
 	},
 	"build": {
-    "productName": "Smash Wars Galaxy Launcher",
-    "win": {
-      "requestedExecutionLevel": "highestAvailable",
-      "target": [
-        "nsis",
-        "zip"
-      ]
-    },
-    "nsis": {
-      "perMachine": true
-    }
+		"productName": "Smash Wars Galaxy Launcher",
+		"win": {
+			"requestedExecutionLevel": "highestAvailable",
+			"target": [
+				"nsis",
+				"zip"
+			]
+		},
+		"nsis": {
+			"perMachine": true
+		}
+	}
 }
