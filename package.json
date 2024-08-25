@@ -1,12 +1,11 @@
 {
 	"name": "smashswg-launcher",
-	"version": "0.0.1",
+	"version": "0.1.0b",
 	"description": "Launcher and Patcher for Smashley's SWG Server",
 	"main": "main.js",
 	"scripts": {
 		"start": "electron .",
-		"build": "electron-builder --dir --win",
-		"deploy": "electron-builder --win --publish always --ia32"
+		"build": "build --win --ia32"
 	},
 	"repository": {
 		"type": "git",
@@ -16,30 +15,30 @@
 		"launcher",
 		"swgemu"
 	],
-	"author": "InfiniteAxis",
+	"author": "InfiniteAxis at Smash Wars Galaxies",
 	"license": "CC0-1.0",
 	"bugs": {
 		"url": "https://github.com/InfiniteAxis/SmashSWG-Launcher/issues"
 	},
 	"homepage": "https://github.com/InfiniteAxis/SmashSWG-Launcher#readme",
 	"devDependencies": {
-		"electron": "^32.0.1",
-		"electron-builder": "^24.13.3"
+		"dotenv": "^16.4.5",
+		"electron": "~1.6.2",
+		"electron-builder": "^19.13.0"
 	},
 	"dependencies": {
-		"adm-zip": "^0.5.15",
+		"adm-zip": "^0.4.7",
 		"electron-is-dev": "^0.2.0",
-		"electron-log": "^4.3.1",
-		"electron-updater": "^6.3.4",
-		"follow-redirects": "^1.13.2",
-		"mkdirp": "^1.0.4",
-		"random-access-file": "^2.1.5",
-		"request": "^2.88.2"
+		"electron-log": "^2.2.7",
+		"electron-updater": "^2.18.2",
+		"follow-redirects": "^1.2.4",
+		"random-access-file": "^1.8.1",
+		"request": "^2.81.0"
 	},
 	"build": {
 		"productName": "Smash Wars Galaxy Launcher",
 		"win": {
-			"requestedExecutionLevel": "highestAvailable",
+			"icon": "./img/logo_icon.ico",
 			"target": [
 				"nsis",
 				"zip"
@@ -47,7 +46,12 @@
 		},
 		"nsis": {
 			"perMachine": true
-		}
-	},
-	"postinstall": "electron-builder install-app-deps"
+		},
+		"publish": [
+			{
+				"provider": "github",
+				"token": "${process.env.GITHUB_TOKEN}"
+			}
+		]
+	}
 }

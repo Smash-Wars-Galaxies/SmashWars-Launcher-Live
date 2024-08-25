@@ -1,173 +1,265 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Smash Wars Galaxies Launcher</title>
-    <style>
-      .button {
-        position: absolute;
-        left: 2%;
-        width: 334px;
-        height: 53px;
-        border:none;
-        cursor:pointer;
-      }
-      :focus {outline:0}
-      .traybutton {
-        color: #cc9966;
-        background-color:#7b1b1d;
-        height:32px;
-        width:32px;
-        font-size:16px;
-        line-height:16px;
-        font-weight: 1000;
-        border-radius: 5px;
-        border: none;
-      }
-      .rightbox {
-        position:absolute;
-        top:0;
-        bottom:0;
-        left:calc(6% + 334px);
-        right:2%;
-      }
-      .right {
-        font: 24px Arial;
-        color: #cc9966;
-        position: absolute;
-        width: 100%;
-        text-align: center;
-      }
-      .shadow {
-        box-shadow: 3px 3px 3px rgba(0,0,0,0.75);
-      }
-      .right.button {
-        height: 45px;
-        width: 155px;
-        right: -7px;
-        left: initial;
-        border: none;
-      }
-      .right.input {
-        border: 3px solid #7b1b1d;
-        border-radius: 8px;
-        background-color: #627d9f;
-        box-sizing: border-box;
-        color: black;
-      }
-      button.right {
-        background-color: #7b1b1d;
-        cursor: pointer;
-        border-radius: 8px;
-        border: 3px solid #7b1b1d;
-        color: #cc9966
-      }
-      button.right:disabled {
-        background-color: #2f2f2f;
-      }
-      #version {
-        position: absolute;
-        left: 5px;
-        bottom: 5px;
-        font: 10px Arial;
-        color: #cc9966;
-        cursor: pointer;
-        z-index: 1000;
-      }
-      #modlist {
-        background-color: #627d9f;
-        border: 3px solid #7b1b1d;
-        border-radius: 8px;
-        color: black;
-        box-sizing: border-box;
-        padding: 0;
-        margin: 0;
-      }
-      #modlist li {
-        list-style-type: none;
-        display: inline-block;
-        margin-left: 10px;
-      }
 
-      #play { background:url(./img/playbutton.png) no-repeat; }
-      #play:hover { background:url(./img/playbuttonhov.png) no-repeat; }
-      #play:active { background:url(./img/playbuttonclick.png) no-repeat; }
-      #play:disabled { background:url(./img/playbuttondis.png) no-repeat; }
+<head>
+	<meta charset="UTF-8">
+	<title>Smash Wars Galaxies Launcher</title>
+	<style>
+		.button {
+			position: absolute;
+			left: 2%;
+			width: 334px;
+			height: 53px;
+			border: none;
+			cursor: pointer;
+		}
 
-      #web { background:url(./img/webbutton.png) no-repeat; }
-      #web:hover { background:url(./img/webbuttonhov.png) no-repeat; }
-      #web:active { background:url(./img/webbuttonclick.png) no-repeat; }
-      #web:disabled { background:url(./img/webbuttondis.png) no-repeat; }
+		:focus {
+			outline: 0
+		}
 
-      #disc { background:url(./img/discbutton.png) no-repeat; }
-      #disc:hover { background:url(./img/discbuttonhov.png) no-repeat; }
-      #disc:active { background:url(./img/discbuttonclick.png) no-repeat; }
-      #disc:disabled { background:url(./img/discbuttondis.png) no-repeat; }
+		.traybutton {
+			color: #50dcef;
+			background-color: #1b4f7b ;
+			height: 32px;
+			width: 32px;
+			font-size: 16px;
+			line-height: 16px;
+			font-weight: 1000;
+			border-radius: 5px;
+			border: none;
+		}
 
-      #home { background:url(./img/homebutton.png) no-repeat; }
-      #home:hover { background:url(./img/homebuttonhov.png) no-repeat; }
-      #home:active { background:url(./img/homebuttonclick.png) no-repeat; }
+		.rightbox {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: calc(6% + 334px);
+			right: 2%;
+		}
 
-      #minimize { background:url(./img/minimize.png) no-repeat; }
-      #maximize { background:url(./img/maximize.png) no-repeat; }
-      #close { background:url(./img/close.png) no-repeat; }
+		.right {
+			font: 24px Arial;
+			color: #50dcef;
+			position: absolute;
+			width: 100%;
+			text-align: center;
+		}
 
-      .webview-wrapper {border-radius: 5px; padding: 5px 0; background-color: white; box-sizing:border-box}
-    </style>
-  </head>
-  <body style="overflow:hidden; height: 100%;user-select: none">
-    <img class="header-img" src="./img/launcher-background1.jpg" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: -1;"/>
-    <div style="position: absolute; top:5px; right: 5px; z-index: 1000">
-      <button id="minimize" class="traybutton"></button>
-      <button id="maximize" class="traybutton"></button>
-      <button id="close" class="traybutton"></button>
-    </div>
-    <div id="rightcontent" class="rightbox">
-      <div class="right" style="top: 12px;">SWG Folder</div>
-      <input id="folder" type="text" class="right shadow input" style="top: 48px;"/>
-      <button id="browse" class="right shadow" style="top: 96px;">Browse</button>
-      <button id="install" class="right shadow" style="top: 144px; width:38%;">Install From SWG</button>
-      <button id="fullscan" class="right shadow" style="top: 144px; left:40%; width:38%;">Full Scan</button>
-      <button id="cancel" class="right shadow" style="top: 144px; left:80%; width:20%;">Cancel</button>
-      <div class="right" style="top: 208px;">Mods</div>
-      <ul id="modlist" class="right shadow" style="top:240px;"></ul>
-      <div class="right" style="bottom:118px;left: 0px;width:15%">RAM</div>
-      <select id="ram" class="right shadow input" style="bottom:118px;left:15%;width:15%;">
-        <option value="750">750 MB (default)</option>
-        <option value="1024">1 GB</option>
-        <option value="1536">1.5 GB</option>
-        <option value="2048">2 GB</option>
-      </select>
-      <div class="right" style="bottom:118px; left:35%;width:15%">FPS</div>
-      <select id="fps" class="right shadow input" style="bottom:118px;left:50%;width:15%;">
-        <option value="30">30 (default)</option>
-        <option value="45">45</option>
-        <option value="60">60</option>
-      </select>
-      <div class="right" style="bottom:118px; left:70%;width:15%">Zoom</div>
-      <select id="zoom" class="right shadow input" style="bottom:118px;left:85%;width:15%;">
-        <option value="1">1 (default)</option>
-        <option value="3">3</option>
-        <option value="5">5 (medium)</option>
-        <option value="7">7</option>
-        <option value="10">10 (far)</option>
-      </select>
-      <button id="gamesettings" class="right shadow" style="bottom:70px;">Game Settings</button>
-      <button id="home" class="right button" style="bottom:12px"></button>
-    </div>
+		.shadow {
+			box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.75);
+		}
 
-    <img class="header-img" src="./img/logo.png" style="position: absolute; left: 2%; top: 2%; width: 334px; -webkit-app-region: drag"/>
-    <button id="play" class="button" disabled style="top: 23%;"></button>
-    <div id="progressbox" class="button shadow" style="top: 33%;height:24px; color: black; font-size: 16px; border: 3px solid #7b1b1d; border-radius: 8px; box-sizing: border-box; background-color: #627d9f">
-      <div id="progress" style="width:0%;height:100%;background-color:#cc9966;border-radius:6px"></div>
-      <div id="progresstext" style="position:absolute;top:0;width:100%;height:100%;text-align:center;"></div>
-    </div>
-    <button id="web" class="button" style="top: 68%;"></button>
-    <button id="disc" class="button" style="top: 83%;"></button>
-    <div id="version"></div>
-  </body>
+		.right.button {
+			height: 45px;
+			width: 155px;
+			right: -7px;
+			left: initial;
+			border: none;
+		}
 
-  <script>
-    require('./renderer.js')
-  </script>
+		.right.input {
+			border: 3px solid #1b4f7b;
+			border-radius: 8px;
+			background-color: #627d9f;
+			box-sizing: border-box;
+			color: black;
+		}
+
+		button.right {
+			background-color: #1b4f7b;
+			cursor: pointer;
+			border-radius: 8px;
+			border: 3px solid #1b4f7b;
+			color: #50dcef
+		}
+
+		button.right:disabled {
+			background-color: #2f2f2f;
+		}
+
+		#version {
+			position: absolute;
+			left: 5px;
+			bottom: 5px;
+			font: 10px Arial;
+			color: #141413;
+			cursor: pointer;
+			z-index: 1000;
+		}
+
+		#modlist {
+			background-color: #627d9f;
+			border: 3px solid #50dcef;
+			border-radius: 8px;
+			color: black;
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+
+		#modlist li {
+			list-style-type: none;
+			display: inline-block;
+			margin-left: 10px;
+		}
+
+		#play {
+			background: url(./img/playbutton.png) no-repeat;
+		}
+
+		#play:hover {
+			background: url(./img/playbuttonhov.png) no-repeat;
+		}
+
+		#play:active {
+			background: url(./img/playbuttonclick.png) no-repeat;
+		}
+
+		#play:disabled {
+			background: url(./img/playbuttondis.png) no-repeat;
+		}
+
+		#settings {
+			background: url(./img/settingsbutton.png) no-repeat;
+		}
+
+		#settings:hover {
+			background: url(./img/settingsbuttonhov.png) no-repeat;
+		}
+
+		#settings:active,
+		#settings.active {
+			background: url(./img/settingsbuttonclick.png) no-repeat;
+		}
+
+		#settings:disabled {
+			background: url(./img/settingsbuttondis.png) no-repeat;
+		}
+
+		#web {
+			background: url(./img/webbutton.png) no-repeat;
+		}
+
+		#web:hover {
+			background: url(./img/webbuttonhov.png) no-repeat;
+		}
+
+		#web:active {
+			background: url(./img/webbuttonclick.png) no-repeat;
+		}
+
+		#web:disabled {
+			background: url(./img/webbuttondis.png) no-repeat;
+		}
+
+		#disc {
+			background: url(./img/discbutton.png) no-repeat;
+		}
+
+		#disc:hover {
+			background: url(./img/discbuttonhov.png) no-repeat;
+		}
+
+		#disc:active {
+			background: url(./img/discbuttonclick.png) no-repeat;
+		}
+
+		#disc:disabled {
+			background: url(./img/discbuttondis.png) no-repeat;
+		}
+
+		#home {
+			background: url(./img/homebutton.png) no-repeat;
+		}
+
+		#home:hover {
+			background: url(./img/homebuttonhov.png) no-repeat;
+		}
+
+		#home:active {
+			background: url(./img/homebuttonclick.png) no-repeat;
+		}
+
+		#minimize {
+			background: url(./img/minimize.png) no-repeat;
+		}
+
+		#maximize {
+			background: url(./img/maximize.png) no-repeat;
+		}
+
+		#close {
+			background: url(./img/close.png) no-repeat;
+		}
+
+		.webview-wrapper {
+			border-radius: 5px;
+			padding: 5px 0;
+			background-color: white;
+			box-sizing: border-box
+		}
+	</style>
+</head>
+
+<body style="overflow:hidden; height: 100%;user-select: none">
+	<img class="header-img" src="./img/launcher-background1.jpg"
+		style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: -1;" />
+	<div style="position: absolute; top:5px; right: 5px; z-index: 1000">
+		<button id="minimize" class="traybutton"></button>
+		<button id="maximize" class="traybutton"></button>
+		<button id="close" class="traybutton"></button>
+	</div>
+	<div id="rightcontent" class="rightbox">
+	</div>
+	<div id="rightsettings" class="rightbox" style="display:none">
+		<div class="right" style="top: 12px;">SWG Folder</div>
+		<input id="folder" type="text" class="right shadow input" style="top: 48px;" />
+		<button id="browse" class="right shadow" style="top: 96px;">Browse</button>
+		<button id="install" class="right shadow" style="top: 144px; width:38%;">Install From SWG</button>
+		<button id="fullscan" class="right shadow" style="top: 144px; left:40%; width:38%;">Full Scan</button>
+		<button id="cancel" class="right shadow" style="top: 144px; left:80%; width:20%;">Cancel</button>
+		<div class="right" style="top: 208px;">Mods</div>
+		<ul id="modlist" class="right shadow" style="top:240px;"></ul>
+		<div class="right" style="bottom:118px;left: 0px;width:15%">RAM</div>
+		<select id="ram" class="right shadow input" style="bottom:118px;left:15%;width:15%;">
+			<option value="750">750 MB (default)</option>
+			<option value="1024">1 GB</option>
+			<option value="1536">1.5 GB</option>
+			<option value="2048">2 GB</option>
+		</select>
+		<div class="right" style="bottom:118px; left:35%;width:15%">FPS</div>
+		<select id="fps" class="right shadow input" style="bottom:118px;left:50%;width:15%;">
+			<option value="30">30 (default)</option>
+			<option value="45">45</option>
+			<option value="60">60</option>
+		</select>
+		<div class="right" style="bottom:118px; left:70%;width:15%">Zoom</div>
+		<select id="zoom" class="right shadow input" style="bottom:118px;left:85%;width:15%;">
+			<option value="1">1 (default)</option>
+			<option value="1.5">1.5 (Medium)</option>
+			<option value="2">2 (Far)</option>
+		</select>
+		<button id="gamesettings" class="right shadow" style="bottom:70px;">Game Settings</button>
+		<button id="home" class="right button" style="bottom:12px"></button>
+	</div>
+
+	<img class="header-img" src="./img/SmashWars-Galaxies_Legacy-Reborn-logo-01-ALT.png"
+		style="position: absolute; left: 2%; top: 2%; width: 334px; -webkit-app-region: drag" />
+	<button id="play" class="button" disabled style="top: 23%;"></button>
+	<div id="progressbox" class="button shadow"
+		style="top: 33%;height:24px; color: black; font-size: 16px; border: 3px solid #1b4f7b ; border-radius: 8px; box-sizing: border-box; background-color: #627d9f">
+		<div id="progress" style="width:0%;height:100%;background-color:#50dcef;border-radius:6px"></div>
+		<div id="progresstext" style="position:absolute;top:0;width:100%;height:100%;text-align:center;"></div>
+	</div>
+	<button id="settings" class="button" style="top: 38%;"></button>
+	<button id="web" class="button" style="top: 68%;"></button>
+	<button id="disc" class="button" style="top: 83%;"></button>
+	<div id="version"></div>
+</body>
+
+<script>
+	require('./renderer.js')
+</script>
+
 </html>
