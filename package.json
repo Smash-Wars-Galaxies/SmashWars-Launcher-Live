@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "electron .",
 		"build": "build --win --ia32",
-		"deploy": "build --win --ia32 --publish always"
+		"deploy": "build --win --ia32 --publish=always"
 	},
 	"repository": {
 		"type": "git",
@@ -47,6 +47,14 @@
 		},
 		"nsis": {
 			"perMachine": true
-		}
+		},
+		"publish": [
+			{
+				"provider": "github",
+				"owner": "InfiniteAxis",
+				"repo": "SmashSWG-Launcher",
+				"releaseType": "release"
+			}
+		]
 	}
 }
