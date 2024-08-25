@@ -1,5 +1,4 @@
 const {app, BrowserWindow, ipcMain, dialog} = require('electron');
-require('dotenv').config();
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const path = require('path');
