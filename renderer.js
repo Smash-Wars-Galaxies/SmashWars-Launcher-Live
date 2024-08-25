@@ -23,12 +23,11 @@ const progressBox = document.getElementById('progressbox');
 const progressBar = document.getElementById('progress');
 const progressText = document.getElementById('progresstext');
 const minBtn = document.getElementById('minimize');
-const maxBtn = document.getElementById('maximize');
 const closeBtn = document.getElementById('close');
+const screenSizeSel = document.getElementById('screenSize')
 const ramSel = document.getElementById('ram');
 const fpsSel = document.getElementById('fps');
 const zoomSel = document.getElementById('zoom');
-const gamesettingsBtn = document.getElementById('gamesettings');
 const versionDiv = document.getElementById('version');
 versionDiv.innerHTML = package.version;
 
@@ -42,6 +41,15 @@ if (!config.mods) {
 	config.mods = [];
 	needSave = true;
 }
+
+if (!config.screenWidth || !config.screenHeight) {
+    config.screenWidth = 1920;
+    config.screenHeight = 1080;
+    needSave = true;
+}
+const selectedSize = `${config.screenWidth}x${config.screenHeight}`;
+screenSizeSel.value = selectedSize;
+
 if (!config.fps) {
 	config.fps = 30;
 	needSave = true;
@@ -60,11 +68,6 @@ zoomSel.value = config.zoom;
 if (needSave) saveConfig();
 
 minBtn.addEventListener('click', event => remote.getCurrentWindow().minimize());
-maxBtn.addEventListener('click', event => {
-	var window = remote.getCurrentWindow();
-	if (!window.isMaximized()) window.maximize();
-	else window.unmaximize();
-});
 closeBtn.addEventListener('click', event => remote.getCurrentWindow().close());
 
 playBtn.addEventListener('click', event => {
@@ -98,11 +101,6 @@ function play() {
 	const child = process.spawn("SWGEmu.exe", args, { cwd: config.folder, env: env, detached: true, stdio: 'ignore' });
 	child.unref();
 }
-
-gamesettingsBtn.addEventListener('click', event => {
-	const child = process.spawn("cmd", ["/c", path.join(config.folder, "SWGEmu_Setup.exe")], { cwd: config.folder, detached: true, stdio: 'ignore' });
-	child.unref();
-})
 
 function showSettingsPanel() {
 	rightContent.style.display = 'none';
@@ -142,6 +140,13 @@ ipc.on('selected-directory', function (event, path) {
 	folderBox.value = path;
 	config.folder = path;
 	saveConfig();
+});
+
+screenSizeSel.addEventListener('change', event => {
+    const [width, height] = event.target.value.split('x');
+    config.screenWidth = parseInt(width);
+    config.screenHeight = parseInt(height);
+    saveConfig();
 });
 
 fpsSel.addEventListener('change', event => {

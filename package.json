@@ -1,6 +1,6 @@
 {
 	"name": "smashswg-launcher",
-	"version": "0.1.2",
+	"version": "0.1.4",
 	"description": "Launcher and Patcher for Smashley's SWG Server",
 	"main": "main.js",
 	"scripts": {
@@ -47,14 +47,6 @@
 		},
 		"nsis": {
 			"perMachine": true
-		},
-		"publish": [
-			{
-				"provider": "github",
-				"owner": "InfiniteAxis",
-				"repo": "SmashSWG-Launcher",
-				"releaseType": "release"
-			}
-		]
+		}
 	}
 }
