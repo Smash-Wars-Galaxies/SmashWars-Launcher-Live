@@ -78,14 +78,28 @@ minBtn.addEventListener('click', event => remote.getCurrentWindow().minimize());
 closeBtn.addEventListener('click', event => remote.getCurrentWindow().close());
 
 playBtn.addEventListener('click', event => {
-	if (playBtn.disabled)
-		return;
-	play();
+	if (playBtn.disabled) return;
+	var fd = fs.openSync(path.join(config.folder, "SWGEmu.exe"), "r");
+	var buf = new Buffer(7);
+	var bytes = fs.readSync(fd, buf, 0, 7, 0x1153);
+	fs.closeSync(fd);
+	fd = null;
+	if (bytes == 7 && buf.readUInt8(0) == 0xc7 && buf.readUInt8(1) == 0x45 && buf.readUInt8(2) == 0x94 && buf.readFloatLE(3) != config.fps) {
+		var file = require('random-access-file')(path.join(config.folder, "SWGEmu.exe"));
+		buf = new Buffer(4);
+		buf.writeFloatLE(config.fps);
+		file.write(0x1156, buf, err => {
+			if (err) alert("Could not modify FPS. Close all instances of the game to update FPS.\n" + ex.toString());
+			file.close(play);
+		})
+	} else {
+		play();
+	}
 });
 
 function play() {
 	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}`);
-	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\n[Direct3d9]r\nallowTearing=${config.vsync}r\nfullscreenRefreshRate==${config.fps}`);
+	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate==${config.fps}`);
 	var env = Object.create(require('process').env);
 	env.SWGCLIENT_MEMORY_SIZE_MB = config.ram;
 	const child = process.spawn("SWGEmu.exe", args, { cwd: config.folder, env: env, detached: true, stdio: 'ignore' });
