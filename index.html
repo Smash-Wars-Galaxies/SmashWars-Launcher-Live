@@ -20,7 +20,7 @@
 
 		.traybutton {
 			color: #50dcef;
-			background-color: #1b4f7b ;
+			background-color: #1b4f7b;
 			height: 32px;
 			width: 32px;
 			font-size: 16px;
@@ -222,11 +222,17 @@
 		<button id="cancel" class="right shadow" style="top: 144px; left:80%; width:20%;">Cancel</button>
 		<div class="right" style="top: 208px;">Screen Size</div>
 		<select id="screenSize" class="right shadow input" style="top:250px;">
-		    <option value="1024x768">1024x768</option>
-		    <option value="1280x720">1280x720</option>
-		    <option value="1920x1080" selected>1920x1080 (default)</option>
-		    <option value="2560x1440">2560x1440</option>
+			<option value="1024x768">1024x768</option>
+			<option value="1280x720">1280x720</option>
+			<option value="1920x1080" selected>1920x1080 (default)</option>
+			<option value="2560x1440">2560x1440</option>
 		</select>
+
+		<div class="right" style="top: 300px; display: flex; align-items: center;">
+			<span>VSync?
+			<input type="checkbox" id="vsync" class="input"/></span>
+		</div>
+		
 		<div class="right" style="bottom:118px;left: 0px;width:15%">RAM</div>
 		<select id="ram" class="right shadow input" style="bottom:118px;left:15%;width:15%;">
 			<option value="750">750 MB (default)</option>
