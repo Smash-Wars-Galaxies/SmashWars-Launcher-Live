@@ -272,6 +272,11 @@ function disableAll() {
 	installBtn.disabled = true;
 	playBtn.disabled = true;
 	browseBtn.disabled = true;
+	screenSizeSel.disabled = true;
+	ramSel.disabled = true;
+	fpsSel.disabled = true;
+	zoomSel.disabled = true;
+	vsyncCheckbox.disabled = true;
 	for (var child of modListBox.children) {
 		child.children[0].disabled = true;
 	}
@@ -283,6 +288,11 @@ function enableAll() {
 	installBtn.disabled = false;
 	playBtn.disabled = false;
 	browseBtn.disabled = false;
+	ramSel.disabled = false;
+	screenSizeSel.disabled = false;
+	fpsSel.disabled = false;
+	zoomSel.disabled = false;
+	vsyncCheckbox.disabled = false;
 	for (var child of modListBox.children) {
 		child.children[0].disabled = false;
 	}
