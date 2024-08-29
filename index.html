@@ -209,16 +209,16 @@
 		<button id="minimize" class="traybutton"></button>
 		<button id="close" class="traybutton"></button>
 	</div>
-	<div id="rightcontent" class="rightbox">
+	<div id="rightcontent" class="rightbox" style="display:none">
 		<div class="right" style="top: 208px;">Mods</div>
 		<ul id="modlist" class="right shadow" style="top:240px;"></ul>
 	</div>
-	<div id="rightsettings" class="rightbox" style="display:none">
-		<div class="right" style="top: 12px;">SWG Folder</div>
+	<div id="rightsettings" class="rightbox">
+		<div class="right" style="top: 12px;">SWG Client Folder</div>
 		<input id="folder" type="text" class="right shadow input" style="top: 48px;" />
-		<button id="browse" class="right shadow" style="top: 96px;">Browse</button>
-		<button id="install" class="right shadow" style="top: 144px; width:38%;">Install From SWG</button>
-		<button id="fullscan" class="right shadow" style="top: 144px; left:40%; width:38%;">Full Scan</button>
+		<button id="browse" class="right shadow" style="top: 96px;">Select SWG Client Folder</button>
+		<button id="install" class="right shadow" style="top: 144px; width:38%;" hidden>Install From SWG</button>
+		<button id="fullscan" class="right shadow" style="top: 144px; left:40%; width:38%;">Check for Updates</button>
 		<button id="cancel" class="right shadow" style="top: 144px; left:80%; width:20%;">Cancel</button>
 		<div class="right" style="top: 208px;">Screen Size</div>
 		<select id="screenSize" class="right shadow input" style="top:250px;">
@@ -254,7 +254,6 @@
 			<option value="1.5">1.5 (Medium)</option>
 			<option value="2">2 (Far)</option>
 		</select>
-		<button id="home" class="right button" style="bottom:12px"></button>
 	</div>
 
 	<img class="header-img" src="./img/SmashWars-Galaxies_Legacy-Reborn-logo-01-ALT.png"
@@ -265,7 +264,7 @@
 		<div id="progress" style="width:0%;height:100%;background-color:#50dcef;border-radius:6px"></div>
 		<div id="progresstext" style="position:absolute;top:0;width:100%;height:100%;text-align:center;"></div>
 	</div>
-	<button id="settings" class="button" style="top: 38%;"></button>
+	<button id="settings" class="button" style="top: 38%;" hidden></button>
 	<button id="web" class="button" style="top: 68%;"></button>
 	<button id="disc" class="button" style="top: 83%;"></button>
 	<div id="version"></div>

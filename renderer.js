@@ -99,19 +99,7 @@ function showSettingsPanel() {
 }
 
 settings.addEventListener('click', event => {
-	if (rightContent.style.display == 'none') {
-		rightContent.style.display = 'block';
-		rightSettings.style.display = 'none';
-		settings.className = "button";
-	} else {
 		showSettingsPanel();
-	}
-});
-
-home.addEventListener('click', event => {
-	rightContent.style.display = 'block';
-	rightSettings.style.display = 'none';
-	settings.className = "button";
 });
 
 websiteBtn.addEventListener('click', event => shell.openExternal("https://www.twitch.tv/smashley"));
