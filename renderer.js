@@ -118,6 +118,7 @@ ipc.on('selected-directory', function (event, path) {
 	folderBox.value = path;
 	config.folder = path;
 	saveConfig();
+	install.install(config.folder, config.folder, config.mods, true);
 });
 
 screenSizeSel.addEventListener('change', event => {
