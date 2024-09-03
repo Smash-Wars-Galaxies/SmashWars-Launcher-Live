@@ -204,6 +204,8 @@
 
 <body style="overflow:hidden; height: 100%;user-select: none">
 	<img class="header-img" src="./img/swglauncherbackground.png"
+
+    <div id="drag-region" style="position: absolute; top: 0; width: 100%; height: 30px; cursor: move; -webkit-app-region: drag;"></div>
 		style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: -1;" />
 	<div style="position: absolute; top:5px; right: 5px; z-index: 1000">
 		<button id="minimize" class="traybutton"></button>
@@ -216,7 +218,7 @@
 	<div id="rightsettings" class="rightbox">
 		<div class="right" style="top: 12px;">SWG Client Folder</div>
 		<input id="folder" type="text" class="right shadow input" style="top: 48px;" />
-		<button id="browse" class="right shadow" style="top: 96px;">Select SWG Client Folder</button>
+    <button id="browse" class="right shadow" style="top: 144px; left:0%; width:38%;">Update SWG Client Folder</button>
 		<button id="install" class="right shadow" style="top: 144px; width:38%;" hidden>Install From SWG</button>
 		<button id="fullscan" class="right shadow" style="top: 144px; left:40%; width:38%;">Check for Updates</button>
 		<button id="cancel" class="right shadow" style="top: 144px; left:80%; width:20%;">Cancel</button>
@@ -259,6 +261,8 @@
 	</div>
 
 	<img class="header-img" src="./img/SmashWars-Galaxies_Legacy-Reborn-logo-01-ALT.png"
+
+    <div id="drag-region" style="position: absolute; top: 0; width: 100%; height: 30px; cursor: move; -webkit-app-region: drag;"></div>
 		style="position: absolute; left: 2%; top: 2%; width: 334px; -webkit-app-region: drag" />
 	<button id="play" class="button" disabled style="top: 23%;"></button>
 	<div id="progressbox" class="button shadow"
