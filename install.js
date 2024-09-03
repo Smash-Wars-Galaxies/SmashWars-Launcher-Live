@@ -9,10 +9,10 @@ module.exports.getManifest = function (mods, fullScan, emuPath, checkFiles) {
 	if (fullScan || (emuPath && !fs.existsSync(path.join(emuPath, "swgemu.cfg")))) {
 		//force download with size:0, md5:""
 		files = files.concat([
-			{ name: "swgemu.cfg", size: 0, md5: "", url: "https://drive.google.com/uc?export=download&id=1iTa73vC7zCXGYu27KzA4hUMfkSVmzSc8" },
-			{ name: "swgemu_login.cfg", size: 0, md5: "", url: "https://drive.google.com/uc?export=download&id=1br02-vpXK--9lNGkrsGkcgFEG5QtbNUT" },
-			{ name: "swgemu_machineoptions.iff", size: 0, md5: "", url: "https://drive.google.com/uc?export=download&id=1vrQ1cmKhXuAjYZEsU6kiNECrZvz3xtzS" },
-			{ name: "swgemu_preload.cfg", size: 0, md5: "", url: "https://drive.google.com/uc?export=download&id=1IeaHE4XctNb0WK0Fdekva9o7foT0oc20" }
+			{ name: "swgemu.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/Patcher%20Files/swgemu.cfg" },
+			{ name: "swgemu_login.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/Patcher%20Files/swgemu_login.cfg" },
+			{ name: "swgemu_machineoptions.iff", size: 0, md5: "", url: "https://swg.hellafast.io/Patcher%20Files/swgemu_machineoptions.iff" },
+			{ name: "swgemu_preload.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/Patcher%20Files/swgemu_preload.cfg" }
 		]);
 	}
 	request({ url: server.manifestUrl, json: true }, function (err, response, body) {

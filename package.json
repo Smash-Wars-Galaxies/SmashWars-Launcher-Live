@@ -1,6 +1,6 @@
 {
 	"name": "smashswg-launcher",
-	"version": "0.9.6",
+	"version": "0.9.7",
 	"description": "Launcher and Patcher for Smashley's SWG Server",
 	"main": "main.js",
 	"scripts": {
