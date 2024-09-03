@@ -1,3 +1,7 @@
+
+const log = require('./logger');
+
+log('Application started');
 const ipc = require('electron').ipcRenderer;
 const shell = require('electron').shell;
 const remote = require('electron').remote;
@@ -292,3 +296,34 @@ function saveConfig() {
 }
 
 showSettingsPanel();
+// Adding window drag functionality
+const { remote } = require('electron');
+const currentWindow = remote.getCurrentWindow();
+
+document.getElementById('drag-region').addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    currentWindow.startDrag();
+});
+
+// Example of logging in renderer.js
+playBtn.addEventListener('click', event => {
+    log('Play button clicked');
+    if (playBtn.disabled) {
+        log('Play button is disabled, action aborted');
+        return;
+    }
+    play();
+});
+
+ipc.on('selected-directory', function (event, path) {
+    log(`Selected directory: ${path}`);
+    folderBox.value = path;
+    config.folder = path;
+    saveConfig();
+    fullscanBtn.click();
+});
+
+function play() {
+    log('Starting the game...');
+    // Existing play function code
+}
