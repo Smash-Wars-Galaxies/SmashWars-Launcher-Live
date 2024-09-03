@@ -1,6 +1,6 @@
 {
 	"name": "smashswg-launcher",
-	"version": "0.9.5",
+	"version": "0.9.6",
 	"description": "Launcher and Patcher for Smashley's SWG Server",
 	"main": "main.js",
 	"scripts": {
@@ -37,7 +37,7 @@
 		"request": "^2.81.0"
 	},
 	"build": {
-		"productName": "Smash Wars Galaxy Launcher",
+		"productName": "Smash Wars Galaxies Launcher",
 		"win": {
 			"icon": "./img/logo_icon.ico",
 			"target": [
