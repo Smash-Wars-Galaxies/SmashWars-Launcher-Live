@@ -6,8 +6,8 @@ import time
 import shutil
 
 # Path to the directory to check and the manifest.json file
-directory_to_check = "/path/to/files"  # Modify this path as needed
-manifest_path = "/var/www/swg/Patcher Files/manifest.json"
+directory_to_check = "/var/www/swg/Patcher Files/"  # The directory where files are modified
+manifest_path = "/var/www/swg/Patcher Files/manifest.json"  # The manifest file path
 
 # Function to create a backup of the existing manifest.json
 def backup_manifest():
