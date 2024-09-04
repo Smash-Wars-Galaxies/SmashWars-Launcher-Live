@@ -2,10 +2,23 @@
 import os
 import hashlib
 import json
+import time
+import shutil
 
 # Path to the directory to check and the manifest.json file
 directory_to_check = "/path/to/files"  # Modify this path as needed
 manifest_path = "/var/www/swg/Patcher Files/manifest.json"
+
+# Function to create a backup of the existing manifest.json
+def backup_manifest():
+    if os.path.exists(manifest_path):
+        # Generate a timestamp for the backup
+        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        backup_path = f"{manifest_path}_{timestamp}.backup"
+        
+        # Rename the current manifest file
+        shutil.copy(manifest_path, backup_path)
+        print(f"Backup created: {backup_path}")
 
 # Calculate MD5 checksum for a file
 def calculate_md5(file_path):
@@ -48,8 +61,9 @@ def update_manifest(file_info_list):
             updated = True
             print(f"Updated checksum for: {file_name}")
 
-    # Save changes to the manifest if updates were made
+    # If updates were made, backup the old manifest and write the new one
     if updated:
+        backup_manifest()  # Create a backup of the existing manifest
         with open(manifest_path, 'w') as manifest_file:
             json.dump(manifest, manifest_file, indent=4)
         print("Manifest.json has been updated.")
