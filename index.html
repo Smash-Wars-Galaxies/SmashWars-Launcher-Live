@@ -15,6 +15,10 @@
 			cursor: pointer;
 		}
 
+		.nodrag {
+			-webkit-app-region: no-drag;
+		}
+
 		:focus {
 			outline: 0
 		}
@@ -64,7 +68,7 @@
 			border-radius: 8px;
 			background-color: #627d9f;
 			box-sizing: border-box;
-			color: black;
+			color: black;		
 		}
 
 		button.right {
@@ -205,10 +209,10 @@
 
 <body style="overflow:hidden; height: 100%;user-select: none">
 	<img class="header-img" src="./img/swglauncherbackground.png"
-		style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: -1;" />
+		style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: -1; -webkit-app-region: drag" />
 	<div style="position: absolute; top:5px; right: 5px; z-index: 1000">
-		<button id="minimize" class="traybutton"></button>
-		<button id="close" class="traybutton"></button>
+		<button id="minimize" class="traybutton nodrag"></button>
+		<button id="close" class="traybutton nodrag"></button>
 	</div>
 	<div id="rightcontent" class="rightbox" style="display:none">
 		<div class="right" style="top: 208px;">Mods</div>
@@ -216,13 +220,13 @@
 	</div>
 	<div id="rightsettings" class="rightbox">
 		<div class="right" style="top: 12px;">SWG Client Folder</div>
-		<input id="folder" type="text" class="right shadow input" style="top: 48px;" />
-		<button id="browse" class="right shadow" style="top: 96px;">Select SWG Client Folder</button>
-		<button id="install" class="right shadow" style="top: 144px; width:38%;" hidden>Install From SWG</button>
-		<button id="fullscan" class="right shadow" style="top: 144px; left:40%; width:38%;">Check for Updates</button>
-		<button id="cancel" class="right shadow" style="top: 144px; left:80%; width:20%;">Cancel</button>
+		<input id="folder" type="text" class="right shadow input nodrag" style="top: 48px;" />
+		<button id="browse" class="right shadow nodrag" style="top: 96px;">Select SWG Client Folder</button>
+		<button id="install" class="right shadow nodrag" style="top: 144px; width:38%;" hidden>Install From SWG</button>
+		<button id="fullscan" class="right shadow nodrag" style="top: 144px; left:40%; width:38%;">Check for Updates</button>
+		<button id="cancel" class="right shadow nodrag" style="top: 144px; left:80%; width:20%;">Cancel</button>
 		<div class="right" style="top: 208px;">Screen Size</div>
-		<select id="screenSize" class="right shadow input" style="top:250px;">
+		<select id="screenSize" class="right shadow input nodrag" style="top:250px;">
 			<option value="1024x768">1024x768</option>
 			<option value="1280x720">1280x720</option>
 			<option value="1600x900">1600x900</option>
@@ -234,25 +238,25 @@
 
 		<div class="right" style="top: 300px; display: flex; align-items: center;">
 			<span>VSync?
-			<input type="checkbox" id="vsync" class="input"/></span>
+			<input type="checkbox" id="vsync" class="input nodrag"/></span>
 		</div>
 		
 		<div class="right" style="bottom:118px;left: 0px;width:15%">RAM</div>
-		<select id="ram" class="right shadow input" style="bottom:118px;left:15%;width:15%;">
+		<select id="ram" class="right shadow input nodrag" style="bottom:118px;left:15%;width:15%;">
 			<option value="750">750 MB (default)</option>
 			<option value="1024">1 GB</option>
 			<option value="1536">1.5 GB</option>
 			<option value="2048">2 GB</option>
 		</select>
 		<div class="right" style="bottom:118px; left:35%;width:15%">FPS</div>
-		<select id="fps" class="right shadow input" style="bottom:118px;left:50%;width:15%;">
+		<select id="fps" class="right shadow input nodrag" style="bottom:118px;left:50%;width:15%;">
 			<option value="30">30 (default)</option>
 			<option value="45">45</option>
 			<option value="60">60</option>
 			<option value="60">120</option>
 		</select>
 		<div class="right" style="bottom:118px; left:70%;width:15%">Zoom</div>
-		<select id="zoom" class="right shadow input" style="bottom:118px;left:85%;width:15%;">
+		<select id="zoom" class="right shadow input nodrag" style="bottom:118px;left:85%;width:15%;">
 			<option value="1">1 (default)</option>
 			<option value="1.5">1.5 (Medium)</option>
 			<option value="2">2 (Far)</option>
@@ -261,15 +265,15 @@
 
 	<img class="header-img" src="./img/SmashWars-Galaxies_Legacy-Reborn-logo-01-ALT.png"
 		style="position: absolute; left: 2%; top: 2%; width: 334px; -webkit-app-region: drag" />
-	<button id="play" class="button" disabled style="top: 23%;"></button>
+	<button id="play" class="button nodrag" disabled style="top: 23%;"></button>
 	<div id="progressbox" class="button shadow"
 		style="top: 33%;height:24px; color: black; font-size: 16px; border: 3px solid #1b4f7b ; border-radius: 8px; box-sizing: border-box; background-color: #627d9f">
 		<div id="progress" style="width:0%;height:100%;background-color:#50dcef;border-radius:6px"></div>
 		<div id="progresstext" style="position:absolute;top:0;width:100%;height:100%;text-align:center;"></div>
 	</div>
-	<button id="settings" class="button" style="top: 38%;" hidden></button>
-	<button id="web" class="button" style="top: 68%;"></button>
-	<button id="disc" class="button" style="top: 83%;"></button>
+	<button id="settings" class="button nodrag" style="top: 38%;" hidden></button>
+	<button id="web" class="button nodrag" style="top: 68%;"></button>
+	<button id="disc" class="button nodrag" style="top: 83%;"></button>
 	<div id="version"></div>
 </body>
 
