@@ -33,7 +33,7 @@ const versionDiv = document.getElementById('version');
 versionDiv.innerHTML = package.version;
 
 const configFile = require('os').homedir() + '/SmashWarsGalaxies-Launcher.json';
-var config = { folder: 'C:\\SmashWarsGalaxies' };
+var config = { folder: '' };
 if (fs.existsSync(configFile))
 	config = JSON.parse(fs.readFileSync(configFile));
 folderBox.value = config.folder;
