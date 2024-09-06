@@ -5,8 +5,8 @@ import shutil
 from datetime import datetime
 
 # Path to the directory to check and the manifest.json file
-directory_to_check = "/var/www/swg/Patcher Files/" 
-manifest_path = "/var/www/swg/Patcher Files/manifest.json"
+directory_to_check = "/var/www/swg/launcher/" 
+manifest_path = "/var/www/swg/launcher/manifest.json"
 
 def calculate_md5(file_path):
     with open(file_path, 'rb') as file:
@@ -47,7 +47,7 @@ def update_manifest():
                         'name': relative_path,
                         'size': os.path.getsize(file_path),
                         'md5': calculate_md5(file_path),
-                        'url': 'https://swg.hellafast.io/Patcher%20Files/' + relative_path
+                        'url': 'https://swg.hellafast.io/launcher/' + relative_path
                     }
                     updated_required.append(new_entry)
 
