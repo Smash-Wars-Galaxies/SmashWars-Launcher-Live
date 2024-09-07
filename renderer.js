@@ -84,7 +84,7 @@ playBtn.addEventListener('click', event => {
 });
 
 function play() {
-	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}`);
+	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}\r\nskipIntro=1`);
 	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate==${config.fps}`);
 	var env = Object.create(require('process').env);
 	env.SWGCLIENT_MEMORY_SIZE_MB = config.ram;
@@ -156,7 +156,7 @@ cancelBtn.addEventListener('click', function (event) {
 ipc.on('install-selected', function (event, path) {
 	disableAll();
 	resetProgress();
-	install.install(path, config.folder, config.mods);
+	install.install(path, config.folder, config.mods, true);
 });
 
 ipc.on('downloading-update', function (event, text) {
@@ -241,7 +241,7 @@ fullscanBtn.addEventListener('click', function (event) {
 	if (fullscanBtn.disabled) return;
 	disableAll();
 	resetProgress();
-	install.install(config.folder, config.folder, config.mods, true);
+	install.install(config.folder, config.folder, config.mods);
 });
 
 if (fs.existsSync(path.join(config.folder, 'bottom.tre'))) {
