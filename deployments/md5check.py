@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Path to the directory to check and the manifest.json file
 directory_to_check = "/var/www/swg/launcher/" 
-manifest_path = "/var/www/swg/launcher/manifest.json"
+manifest_path = "/var/www/swg/manifest.json"
 
 def calculate_md5(file_path):
     with open(file_path, 'rb') as file:
@@ -41,7 +41,7 @@ def update_manifest():
         for file_name in files:
             file_path = os.path.join(root, file_name)
             relative_path = os.path.relpath(file_path, directory_to_check)
-            if relative_path.endswith('.tre') or relative_path.endswith('.cfg') or relative_path.endswith('.iff'):
+            if True:
                 if not any(entry['name'] == relative_path for entry in updated_required):
                     new_entry = {
                         'name': relative_path,
