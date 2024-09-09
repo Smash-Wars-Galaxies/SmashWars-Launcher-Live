@@ -5,8 +5,8 @@ import shutil
 from datetime import datetime
 
 # Path to the directory to check and the manifest.json file
-directory_to_check = "/var/www/swg/launcher/" 
-manifest_path = "/var/www/swg/manifest.json"
+directory_to_check = "/var/www/swg/updates/" 
+manifest_path = "/var/www/swg/updates/manifest.json"
 
 def calculate_md5(file_path):
     with open(file_path, 'rb') as file:
@@ -17,7 +17,7 @@ def calculate_md5(file_path):
 
 def backup_manifest(manifest_path):
     now = datetime.now()
-    backup_path = f"{manifest_path}.bak_{now.strftime('%Y%m%d_%H%M%S')}"
+    backup_path = f"{manifest_path}_{now.strftime('%Y%m%d_%H%M%S')}.bak"
     shutil.copy2(manifest_path, backup_path)
     print(f"Backup created: {backup_path}")
 
@@ -47,7 +47,7 @@ def update_manifest():
                         'name': relative_path,
                         'size': os.path.getsize(file_path),
                         'md5': calculate_md5(file_path),
-                        'url': 'https://swg.hellafast.io/launcher/' + relative_path
+                        'url': 'https://swg.hellafast.io/updates/' + relative_path
                     }
                     updated_required.append(new_entry)
 
