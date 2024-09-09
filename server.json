@@ -1,5 +1,6 @@
 {
     "address": "216.173.113.157",
     "port": "44453",
-    "manifestUrl": "https://swg.hellafast.io/manifest.json"
+    "manifestUrl": "https://swg.hellafast.io/updates/manifest.json",
+	"installManifestUrl": "https://swg.hellafast.io/install/manifest.json"
 }

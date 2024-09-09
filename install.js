@@ -3,28 +3,46 @@ const path = require('path');
 const request = require('request');
 const server = require('./server');
 
-module.exports.getManifest = function (mods, fullScan, emuPath, checkFiles) {
+module.exports.getManifest = function (mods, install, emuPath, checkFiles) {
 	if (!mods) mods = [];
-	var files = require('./required');
-	if (fullScan || (emuPath && !fs.existsSync(path.join(emuPath, "swgemu.cfg")))) {
-		//force download with size:0, md5:""
-		files = files.concat([
-			{ name: "swgemu.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/launcher/swgemu.cfg" },
-			{ name: "swgemu_login.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/launcher/swgemu_login.cfg" },
-			{ name: "swgemu_machineoptions.iff", size: 0, md5: "", url: "https://swg.hellafast.io/launcher/swgemu_machineoptions.iff" },
-			{ name: "swgemu_preload.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/launcher/swgemu_preload.cfg" }
-		]);
-	}
-	request({ url: server.manifestUrl, json: true }, function (err, response, body) {
-		if (err) return console.error(err);
+	if (install) {
+		var files = require('./required');
+		if ((emuPath && !fs.existsSync(path.join(emuPath, "swgemu.cfg")))) {
+			//force download with size:0, md5:""
+			files = files.concat([
+				{ name: "swgemu.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/install/swgemu.cfg" },
+				{ name: "swgemu_login.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/install/swgemu_login.cfg" },
+				{ name: "swgemu_machineoptions.iff", size: 0, md5: "", url: "https://swg.hellafast.io/install/swgemu_machineoptions.iff" },
+				{ name: "swgemu_preload.cfg", size: 0, md5: "", url: "https://swg.hellafast.io/install/swgemu_preload.cfg" }
+			]);
+		}
+		request({ url: server.installManifestUrl, json: true }, function (err, response, body) {
+			if (err) return console.error(err);
 
-		var allmods = [];
-		for (var mod in body) if (mod != 'required') allmods.push(mod);
-		if (module.exports.modList) module.exports.modList(allmods);
-		files = unionByName(files, body.required);
-		for (var mod of mods) files = unionByName(files, body[mod] || []);
-		if (checkFiles) checkFiles(files);
-	});
+			var allmods = [];
+			for (var mod in body) if (mod != 'required') allmods.push(mod);
+			if (module.exports.modList) module.exports.modList(allmods);
+			files = unionByName(files, body.required);
+			for (var mod of mods) files = unionByName(files, body[mod] || []);
+			if (checkFiles) checkFiles(files);
+		});
+	} else {
+		var files = [];
+		if ((emuPath && !fs.existsSync(path.join(emuPath, "swgemu.cfg")))) {
+			module.exports.getManifest(mods, true, emuPath, checkFiles);
+			return;
+		}			
+		request({ url: server.manifestUrl, json: true }, function (err, response, body) {
+			if (err) return console.error(err);
+
+			var allmods = [];
+			for (var mod in body) if (mod != 'required') allmods.push(mod);
+			if (module.exports.modList) module.exports.modList(allmods);
+			files = unionByName(files, body.required);
+			for (var mod of mods) files = unionByName(files, body[mod] || []);
+			if (checkFiles) checkFiles(files);
+		});
+	}
 }
 
 function unionByName(a, b) {
@@ -38,10 +56,10 @@ function unionByName(a, b) {
 
 var forks = [];
 var canceling = true;
-module.exports.install = function (swgPath, emuPath, mods, fullScan) {
+module.exports.install = function (swgPath, emuPath, mods, install) {
 	const child_process = require('child_process');
 	canceling = false;
-	module.exports.getManifest(mods, fullScan, emuPath, checkFiles);
+	module.exports.getManifest(mods, install, emuPath, checkFiles);
 
 	var fileIndex = 0;
 	var completedBytes = 0;
@@ -56,7 +74,7 @@ module.exports.install = function (swgPath, emuPath, mods, fullScan) {
 		}
 
 		var env = { swgPath, emuPath };
-		if (fullScan) env.fullScan = true;
+		if (install) env.isntall = true;
 		for (let i = 0; i < 4; i++) {
 			let fork = child_process.fork(__filename, { env });
 			fork.on('message', m => installedCallback(fork, m));
@@ -114,7 +132,7 @@ if (process.send) {
 		fs.stat(src, (err, stats) => {
 			if (err) { process.send('err: ' + err); return doDownload(); }
 			if (stats.size != fileInfo.size) { process.send("size mismatch actual: " + stats.size + ' expected: ' + fileInfo.size); return doDownload(); }
-			if (process.env.fullScan)
+			if (process.env.install)
 				md5(src, hash => {
 					if (hash != fileInfo.md5) {
 						process.send('md5 mismatch actual: ' + hash + ' expected: ' + fileInfo.md5);

@@ -16,7 +16,7 @@ const rightSettings = document.getElementById('rightsettings');
 const folderBox = document.getElementById('folder');
 const browseBtn = document.getElementById('browse');
 const installBtn = document.getElementById('install');
-const fullscanBtn = document.getElementById('fullscan');
+const updateBtn = document.getElementById('update');
 const cancelBtn = document.getElementById('cancel');
 const modListBox = document.getElementById('modlist');
 const progressBox = document.getElementById('progressbox');
@@ -118,7 +118,6 @@ ipc.on('selected-directory', function (event, path) {
 	folderBox.value = path;
 	config.folder = path;
 	saveConfig();
-	fullscanBtn.click();
 });
 
 screenSizeSel.addEventListener('change', event => {
@@ -237,27 +236,27 @@ function modListChanged() {
 	install.install(config.folder, config.folder, config.mods);
 }
 
-fullscanBtn.addEventListener('click', function (event) {
-	if (fullscanBtn.disabled) return;
+updateBtn.addEventListener('click', function (event) {
+	if (updateBtn.disabled) return;
 	disableAll();
 	resetProgress();
-	install.install(config.folder, config.folder, config.mods);
+	install.install(config.folder, config.folder, config.mods, false);
 });
 
 if (fs.existsSync(path.join(config.folder, 'bottom.tre'))) {
 	disableAll();
 	resetProgress();
-	install.install(config.folder, config.folder, config.mods);
+	install.install(config.folder, config.folder, config.mods, false);
 } else {
 	playBtn.disabled = true;
-	fullscanBtn.disabled = true;
+	updateBtn.disabled = true;
 	install.getManifest();
 	settings.click();
 }
 
 function disableAll() {
 	folderBox.disabled = true;
-	fullscanBtn.disabled = true;
+	updateBtn.disabled = true;
 	installBtn.disabled = true;
 	playBtn.disabled = true;
 	browseBtn.disabled = true;
@@ -273,7 +272,7 @@ function disableAll() {
 
 function enableAll() {
 	folderBox.disabled = false;
-	fullscanBtn.disabled = false;
+	updateBtn.disabled = false;
 	installBtn.disabled = false;
 	playBtn.disabled = false;
 	browseBtn.disabled = false;
