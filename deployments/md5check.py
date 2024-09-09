@@ -41,7 +41,7 @@ def update_manifest():
         for file_name in files:
             file_path = os.path.join(root, file_name)
             relative_path = os.path.relpath(file_path, directory_to_check)
-            if True:
+            if relative_path.endswith('.tre') or relative_path.endswith('.cfg') or relative_path.endswith('.iff'):
                 if not any(entry['name'] == relative_path for entry in updated_required):
                     new_entry = {
                         'name': relative_path,
