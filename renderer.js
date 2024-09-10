@@ -250,7 +250,7 @@ if (fs.existsSync(path.join(config.folder, 'bottom.tre'))) {
 } else {
 	playBtn.disabled = true;
 	updateBtn.disabled = true;
-	install.getManifest();
+	install.getManifest(config.mods, true, config.folder, true);
 	settings.click();
 }
 
