@@ -47,7 +47,7 @@ const screenResolutions = [
 	{ width: 2560, height: 1080, experimental: false },
 	{ width: 2560, height: 1440, experimental: false },
 	{ width: 3440, height: 1440, experimental: false },
-	{ width: 3840, height: 2160, experimental: true },
+	{ width: 5120, height: 1440, experimental: true  },
 ];
 
 const configFile = require('os').homedir() + '/SmashWarsGalaxies-Launcher.json';
