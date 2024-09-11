@@ -26,35 +26,71 @@ const minBtn = document.getElementById('minimize');
 const closeBtn = document.getElementById('close');
 const screenSizeSel = document.getElementById('screenSize');
 const vsyncCheckbox = document.getElementById('vsync');
+const windowedCheckbox = document.getElementById('windowed');
+const borderlessCheckbox = document.getElementById('borderless');
 const ramSel = document.getElementById('ram');
 const fpsSel = document.getElementById('fps');
 const zoomSel = document.getElementById('zoom');
 const versionDiv = document.getElementById('version');
 versionDiv.innerHTML = package.version;
 
+// List of common screen resolutions
+const screenResolutions = [
+	{ width: 1024, height: 768,  experimental: false },
+	{ width: 1280, height: 800,  experimental: false },
+	{ width: 1366, height: 768,  experimental: false },
+	{ width: 1440, height: 900,  experimental: false },
+	{ width: 1600, height: 900,  experimental: false },
+	{ width: 1680, height: 1050, experimental: false },
+	{ width: 1920, height: 1080, experimental: false },
+	{ width: 1920, height: 1200, experimental: false },
+	{ width: 2560, height: 1080, experimental: false },
+	{ width: 2560, height: 1440, experimental: false },
+	{ width: 3440, height: 1440, experimental: false },
+	{ width: 3840, height: 2160, experimental: true },
+];
+
 const configFile = require('os').homedir() + '/SmashWarsGalaxies-Launcher.json';
 var config = { folder: '' };
 if (fs.existsSync(configFile))
 	config = JSON.parse(fs.readFileSync(configFile));
 folderBox.value = config.folder;
+vsyncCheckbox.checked = config.vsync === 1;
+windowedCheckbox.checked = config.windowed === 1;
+borderlessCheckbox.checked = config.borderless === 1;
+fpsSel.value = config.fps;
+ramSel.value = config.ram;
+zoomSel.value = config.zoom;
+populateScreenSizeOptions();
+setSelectedScreenSize();
 var needSave = false;
 if (!config.mods) {
 	config.mods = [];
 	needSave = true;
 }
-if (!config.screenWidth || !config.screenHeight) {
-	config.screenWidth = 1920;
-	config.screenHeight = 1080;
-	needSave = true;
-}
-const selectedSize = `${config.screenWidth}x${config.screenHeight}`;
-screenSizeSel.value = selectedSize;
 if (!config.vsync) {
 	config.vsync = 0;
 	needSave = true;
 }
 vsyncCheckbox.addEventListener('change', () => {
-	config.vsync = vsyncCheckbox.checked ? 0 : 1;
+	config.vsync = vsyncCheckbox.checked ? 1 : 0;
+	saveConfig();
+});
+if (!config.windowed) {
+	config.windowed = 1;
+	needSave = true;
+}
+windowedCheckbox.addEventListener('change', () => {
+	config.windowed = windowedCheckbox.checked ? 1 : 0;
+	saveConfig();
+});
+if (!config.borderless) {
+	config.borderless = 1;
+	needSave = true;
+}
+borderlessCheckbox.addEventListener('change', () => {
+	config.borderless = borderlessCheckbox.checked ? 1 : 0;
+	config.constrainMouse = borderlessCheckbox.checked ? true : false;
 	saveConfig();
 });
 if (!config.fps) {
@@ -78,14 +114,14 @@ minBtn.addEventListener('click', event => remote.getCurrentWindow().minimize());
 closeBtn.addEventListener('click', event => remote.getCurrentWindow().close());
 
 playBtn.addEventListener('click', event => {
-	if (playBtn.disabled) 
+	if (playBtn.disabled)
 		return;
 	play();
 });
 
 function play() {
 	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}\r\nskipIntro=1`);
-	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate==${config.fps}`);
+	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\nwindowed=${config.windowed}\r\nborderlessWindow=${config.borderless}\r\nconstrainMouseCursorToWindow=${config.constrainMouse}\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate==${config.fps}`);
 	var env = Object.create(require('process').env);
 	env.SWGCLIENT_MEMORY_SIZE_MB = config.ram;
 	const child = process.spawn("SWGEmu.exe", { cwd: config.folder, env: env, detached: true, stdio: 'ignore' });
@@ -99,7 +135,7 @@ function showSettingsPanel() {
 }
 
 settings.addEventListener('click', event => {
-		showSettingsPanel();
+	showSettingsPanel();
 });
 
 websiteBtn.addEventListener('click', event => shell.openExternal("https://www.twitch.tv/smashley"));
@@ -288,6 +324,22 @@ function enableAll() {
 
 function saveConfig() {
 	fs.writeFileSync(configFile, JSON.stringify(config));
+}
+
+function populateScreenSizeOptions() {
+	screenSizeSel.innerHTML = ''; // Clear existing options
+  
+	for (const res of screenResolutions) {
+	  const option = document.createElement('option');
+	  option.value = `${res.width}x${res.height}`;
+	  option.text = `${res.width} x ${res.height}${res.experimental ? ' (Experimental, can cause crashes)' : ''}`;
+	  screenSizeSel.add(option);
+	}
+  }
+
+function setSelectedScreenSize() {
+	const selectedSize = `${config.screenWidth}x${config.screenHeight}`;
+	screenSizeSel.value = selectedSize;
 }
 
 showSettingsPanel();

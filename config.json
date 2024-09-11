@@ -1,1 +1,12 @@
-{"folder":""}
+{
+	"folder":"",
+	"vsync":0,
+	"screenWidth":1920,
+	"screenHeight":1080,
+	"windowed":1,
+	"borderless":1,
+	"fps":30,
+	"ram":750,
+	"zoom":1.0,
+	"constrainMouse":false
+}

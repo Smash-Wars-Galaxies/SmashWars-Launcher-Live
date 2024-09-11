@@ -1,7 +1,7 @@
 {
 	"name": "smashswg-launcher",
-	"version": "1.0.2",
-	"description": "Launcher and Patcher for Smashley's SWG Server",
+	"version": "1.0.3",
+	"description": "Launcher and Patcher for Smash Wars Galaxies: Legacy Reborn",
 	"main": "main.js",
 	"scripts": {
 		"start": "electron .",
