@@ -1,6 +1,7 @@
 const ipc = require('electron').ipcRenderer;
 const shell = require('electron').shell;
 const remote = require('electron').remote;
+const log = require('electron-log');
 const fs = require('fs');
 const process = require('child_process');
 const server = require('./server');
@@ -36,18 +37,18 @@ versionDiv.innerHTML = package.version;
 
 // List of common screen resolutions
 const screenResolutions = [
-	{ width: 1024, height: 768,  experimental: false },
-	{ width: 1280, height: 800,  experimental: false },
-	{ width: 1366, height: 768,  experimental: false },
-	{ width: 1440, height: 900,  experimental: false },
-	{ width: 1600, height: 900,  experimental: false },
+	{ width: 1024, height: 768, experimental: false },
+	{ width: 1280, height: 800, experimental: false },
+	{ width: 1366, height: 768, experimental: false },
+	{ width: 1440, height: 900, experimental: false },
+	{ width: 1600, height: 900, experimental: false },
 	{ width: 1680, height: 1050, experimental: false },
 	{ width: 1920, height: 1080, experimental: false },
 	{ width: 1920, height: 1200, experimental: false },
 	{ width: 2560, height: 1080, experimental: false },
 	{ width: 2560, height: 1440, experimental: false },
 	{ width: 3440, height: 1440, experimental: false },
-	{ width: 5120, height: 1440, experimental: true  },
+	{ width: 5120, height: 1440, experimental: true },
 ];
 
 const configFile = require('os').homedir() + '/SmashWarsGalaxies-Launcher.json';
@@ -124,8 +125,20 @@ function play() {
 	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\nwindowed=${config.windowed}\r\nborderlessWindow=${config.borderless}\r\nconstrainMouseCursorToWindow=${config.constrainMouse}\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate==${config.fps}`);
 	var env = Object.create(require('process').env);
 	env.SWGCLIENT_MEMORY_SIZE_MB = config.ram;
-	const child = process.spawn("SWGEmu.exe", { cwd: config.folder, env: env, detached: true, stdio: 'ignore' });
-	child.unref();
+	try {
+		const child = process.spawn("SWGEmu.exe", { cwd: config.folder, env: env, detached: true, stdio: 'ignore' });
+		child.unref();
+
+		// Check if the child process was spawned successfully
+		if (!child.killed && child.pid) {
+			// Send the 'close-launcher' event to the main process
+			ipc.send('close-launcher');
+		} else {
+			log.error('Failed to launch the client.');
+		}
+	} catch (error) {
+		log.error('Error launching the client:', error);
+	}
 }
 
 function showSettingsPanel() {
@@ -328,14 +341,14 @@ function saveConfig() {
 
 function populateScreenSizeOptions() {
 	screenSizeSel.innerHTML = ''; // Clear existing options
-  
+
 	for (const res of screenResolutions) {
-	  const option = document.createElement('option');
-	  option.value = `${res.width}x${res.height}`;
-	  option.text = `${res.width} x ${res.height}${res.experimental ? ' (Experimental, can cause crashes)' : ''}`;
-	  screenSizeSel.add(option);
+		const option = document.createElement('option');
+		option.value = `${res.width}x${res.height}`;
+		option.text = `${res.width} x ${res.height}${res.experimental ? ' (Experimental, can cause crashes)' : ''}`;
+		screenSizeSel.add(option);
 	}
-  }
+}
 
 function setSelectedScreenSize() {
 	const selectedSize = `${config.screenWidth}x${config.screenHeight}`;
