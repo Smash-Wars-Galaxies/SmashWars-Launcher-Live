@@ -122,7 +122,7 @@ playBtn.addEventListener('click', event => {
 
 function play() {
 	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}\r\nskipIntro=1`);
-	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\nwindowed=${config.windowed}\r\nborderlessWindow=${config.borderless}\r\nconstrainMouseCursorToWindow=${config.constrainMouse}\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate=${config.fps}`);
+	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\nwindowed=${config.windowed}\r\nborderlessWindow=${config.borderless}\r\nconstrainMouseCursorToWindow=${config.constrainMouse}\r\n\r\n[ClientUserInterface]\r\ndebugExamine=0\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate=${config.fps}`);
 	var env = Object.create(require('process').env);
 	env.SWGCLIENT_MEMORY_SIZE_MB = config.ram;
 	try {
