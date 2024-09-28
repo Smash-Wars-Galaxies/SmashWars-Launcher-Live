@@ -100,6 +100,7 @@ ipcMain.on('close-launcher', () => {
 
 autoUpdater.on('update-downloaded', (info) => {
 	log.info('Update downloaded', info);
+	autoUpdater.quitAndInstall(true, true);
 });
 
 autoUpdater.on('download-progress', (progress) => {
@@ -114,7 +115,7 @@ autoUpdater.on('update-available', info => {
 
 app.on('ready', function () {
 	log.info('App is ready');
-	autoUpdater.checkForUpdatesAndNotify();
+	autoUpdater.checkForUpdates();
 });
 
 // Log any uncaught exceptions
