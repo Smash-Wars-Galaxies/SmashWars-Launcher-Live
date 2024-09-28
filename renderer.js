@@ -3,7 +3,7 @@ const shell = require('electron').shell;
 const remote = require('electron').remote;
 const log = require('electron-log');
 const fs = require('fs');
-const process = require('child_process');
+const childProcess  = require('child_process');
 const server = require('./server');
 const package = require('./package');
 const install = require('./install');
@@ -12,6 +12,7 @@ const path = require('path');
 const playBtn = document.getElementById('play');
 const websiteBtn = document.getElementById('web');
 const discordBtn = document.getElementById('disc');
+const profcalcBtn = document.getElementById('profcalc');
 const rightContent = document.getElementById('rightcontent');
 const rightSettings = document.getElementById('rightsettings');
 const folderBox = document.getElementById('folder');
@@ -120,13 +121,17 @@ playBtn.addEventListener('click', event => {
 	play();
 });
 
+profcalcBtn.addEventListener('click', function (event) {
+    ipc.send('open-profcalc');
+});
+
 function play() {
 	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}\r\nskipIntro=1`);
 	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\nwindowed=${config.windowed}\r\nborderlessWindow=${config.borderless}\r\nconstrainMouseCursorToWindow=${config.constrainMouse}\r\n\r\n[ClientUserInterface]\r\ndebugExamine=0\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate=${config.fps}`);
 	var env = Object.create(require('process').env);
 	env.SWGCLIENT_MEMORY_SIZE_MB = config.ram;
 	try {
-		const child = process.spawn("SWGEmu.exe", { cwd: config.folder, env: env, detached: true, stdio: 'ignore' });
+		const child = childProcess.spawn("SWGEmu.exe", { cwd: config.folder, env: env, detached: true, stdio: 'ignore' });
 		child.unref();
 
 		// Check if the child process was spawned successfully
@@ -151,7 +156,7 @@ settings.addEventListener('click', event => {
 	showSettingsPanel();
 });
 
-websiteBtn.addEventListener('click', event => shell.openExternal("https://www.twitch.tv/smashley"));
+websiteBtn.addEventListener('click', event => shell.openExternal("https://harvester.hellafast.io/"));
 discordBtn.addEventListener('click', event => shell.openExternal("https://discord.gg/smashley"));
 
 browseBtn.addEventListener('click', function (event) {

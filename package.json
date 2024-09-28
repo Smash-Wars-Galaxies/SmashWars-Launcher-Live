@@ -1,6 +1,6 @@
 {
 	"name": "smashswg-launcher",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"description": "Launcher and Patcher for Smash Wars Galaxies: Legacy Reborn",
 	"main": "main.js",
 	"scripts": {
@@ -45,8 +45,19 @@
 				"zip"
 			]
 		},
+		"extraResources": [
+			{
+				"from": "profcalc",
+				"to": "profcalc",
+				"filter": [
+					"**/*"
+				]
+			}
+		],
 		"nsis": {
-			"perMachine": true
+			"perMachine": true,
+			"oneClick":false,
+			"allowToChangeInstallationDirectory": true
 		}
 	}
 }
