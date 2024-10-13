@@ -1,6 +1,6 @@
 {
 	"name": "smashswg-launcher",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "Launcher and Patcher for Smash Wars Galaxies: Legacy Reborn",
 	"main": "main.js",
 	"scripts": {
@@ -10,7 +10,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/InfiniteAxis/SmashSWG-Launcher.git"
+		"url": "git+hhttps://github.com/Smash-Wars-Galaxies/SmashWars-Launcher-Live.git"
 	},
 	"keywords": [
 		"launcher",
@@ -19,9 +19,9 @@
 	"author": "InfiniteAxis at Smash Wars Galaxies",
 	"license": "CC0-1.0",
 	"bugs": {
-		"url": "https://github.com/InfiniteAxis/SmashSWG-Launcher/issues"
+		"url": "https://github.com/Smash-Wars-Galaxies/SmashWars-Launcher-Live/issues"
 	},
-	"homepage": "https://github.com/InfiniteAxis/SmashSWG-Launcher#readme",
+	"homepage": "https://github.com/Smash-Wars-Galaxies/SmashWars-Launcher-Live#readme",
 	"devDependencies": {
 		"dotenv": "^16.4.5",
 		"electron": "~1.6.2",
