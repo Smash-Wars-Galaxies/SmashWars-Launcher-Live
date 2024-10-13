@@ -10,7 +10,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+hhttps://github.com/Smash-Wars-Galaxies/SmashWars-Launcher-Live.git"
+		"url": "git+https://github.com/Smash-Wars-Galaxies/SmashWars-Launcher-Live.git"
 	},
 	"keywords": [
 		"launcher",
