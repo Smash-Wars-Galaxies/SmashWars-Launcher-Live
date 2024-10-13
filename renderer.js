@@ -38,18 +38,19 @@ versionDiv.innerHTML = package.version;
 
 // List of common screen resolutions
 const screenResolutions = [
-	{ width: 1024, height: 768, experimental: false },
-	{ width: 1280, height: 800, experimental: false },
-	{ width: 1366, height: 768, experimental: false },
-	{ width: 1440, height: 900, experimental: false },
-	{ width: 1600, height: 900, experimental: false },
+	{ width: 1024, height:  768, experimental: false },
+	{ width: 1280, height:  800, experimental: false },
+	{ width: 1366, height:  768, experimental: false },
+	{ width: 1440, height:  900, experimental: false },
+	{ width: 1600, height:  900, experimental: false },
 	{ width: 1680, height: 1050, experimental: false },
 	{ width: 1920, height: 1080, experimental: false },
 	{ width: 1920, height: 1200, experimental: false },
 	{ width: 2560, height: 1080, experimental: false },
 	{ width: 2560, height: 1440, experimental: false },
 	{ width: 3440, height: 1440, experimental: false },
-	{ width: 5120, height: 1440, experimental: true },
+	{ width: 3840, height: 2160, experimental:  true },
+	{ width: 5120, height: 1440, experimental:  true },
 ];
 
 const configFile = require('os').homedir() + '/SmashWarsGalaxies-Launcher.json';
@@ -356,6 +357,10 @@ function populateScreenSizeOptions() {
 }
 
 function setSelectedScreenSize() {
+	if (!config.screenWidth || !config.screenHeight) {
+		config.screenWidth = 1024;
+		config.screenHeight = 768;
+	}
 	const selectedSize = `${config.screenWidth}x${config.screenHeight}`;
 	screenSizeSel.value = selectedSize;
 }
