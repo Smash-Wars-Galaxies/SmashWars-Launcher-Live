@@ -24,7 +24,7 @@
 	"homepage": "https://github.com/Smash-Wars-Galaxies/SmashWars-Launcher-Live#readme",
 	"devDependencies": {
 		"dotenv": "^16.4.5",
-		"electron": "~1.6.2",
+		"electron": "~22.3.25",
 		"electron-builder": "^19.13.0"
 	},
 	"dependencies": {
