@@ -342,6 +342,7 @@ function enableAll() {
 }
 
 function saveConfig() {
+	log.info("Saving Config")
 	fs.writeFileSync(configFile, JSON.stringify(config));
 }
 

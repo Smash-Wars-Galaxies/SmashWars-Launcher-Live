@@ -2,10 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const request = require('request');
 const server = require('./server');
+const log = require('electron-log');
 
 module.exports.getManifest = function (mods, install, emuPath, checkFiles) {
 	if (!mods) mods = [];
 	if (install) {
+		log.info("Getting install manifest");
 		var files = require('./required');
 		if ((emuPath && !fs.existsSync(path.join(emuPath, "swgemu.cfg")))) {
 			//force download with size:0, md5:""
@@ -17,7 +19,7 @@ module.exports.getManifest = function (mods, install, emuPath, checkFiles) {
 			]);
 		}
 		request({ url: server.installManifestUrl, json: true }, function (err, response, body) {
-			if (err) return console.error(err);
+			if (err) return log.error(err);
 
 			var allmods = [];
 			for (var mod in body) if (mod != 'required') allmods.push(mod);
@@ -27,13 +29,14 @@ module.exports.getManifest = function (mods, install, emuPath, checkFiles) {
 			if (checkFiles) checkFiles(files);
 		});
 	} else {
+		log.info("Getting update manifest");
 		var files = [];
 		if ((emuPath && !fs.existsSync(path.join(emuPath, "swgemu.cfg")))) {
 			module.exports.getManifest(mods, true, emuPath, checkFiles);
 			return;
 		}			
 		request({ url: server.manifestUrl, json: true }, function (err, response, body) {
-			if (err) return console.error(err);
+			if (err) return log.error(err);
 
 			var allmods = [];
 			for (var mod in body) if (mod != 'required') allmods.push(mod);
@@ -89,14 +92,14 @@ module.exports.install = function (swgPath, emuPath, mods, install) {
 			if (fileIndex == files.length) {
 				forks.splice(forks.indexOf(fork), 1);
 				fork.kill();
-				console.log("killing fork");
+				log.info("killing fork");
 			}
 			else fork.send(files[fileIndex++]);
 		} else if (message.progress) {
 			completedBytes += message.progress;
 			progress(completedBytes, totalBytes);
 		} else {
-			console.log(JSON.stringify(message));
+			log.info(JSON.stringify(message));
 		}
 	}
 	function progress(completed, total) {
