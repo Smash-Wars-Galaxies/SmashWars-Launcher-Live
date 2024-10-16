@@ -5,8 +5,8 @@
 	"main": "main.js",
 	"scripts": {
 		"start": "electron .",
-		"build": "build --win --ia32",
-		"deploy": "build --win --ia32 --publish=always"
+		"build": "electron-builder --win --ia32",
+		"deploy": "electron-builder --win --ia32 --publish always"
 	},
 	"repository": {
 		"type": "git",
@@ -23,18 +23,16 @@
 	},
 	"homepage": "https://github.com/Smash-Wars-Galaxies/SmashWars-Launcher-Live#readme",
 	"devDependencies": {
+		"adm-zip": "^0.5.16",
 		"dotenv": "^16.4.5",
-		"electron": "~22.3.25",
-		"electron-builder": "^25.1.8"
-	},
-	"dependencies": {
-		"adm-zip": "^0.4.7",
-		"electron-is-dev": "^0.2.0",
-		"electron-log": "^2.2.7",
-		"electron-updater": "^6.3.0",
-		"follow-redirects": "^1.2.4",
-		"random-access-file": "^1.8.1",
-		"request": "^2.81.0"
+		"electron": "^33.0.0",
+		"electron-builder": "^25.1.8",
+		"electron-is-dev": "^3.0.1",
+		"electron-log": "^5.2.0",
+		"electron-updater": "^6.3.9",
+		"follow-redirects": "^1.15.9",
+		"random-access-file": "^4.1.0",
+		"request": "^2.88.2"
 	},
 	"build": {
 		"productName": "Smash Wars Galaxies Launcher",
