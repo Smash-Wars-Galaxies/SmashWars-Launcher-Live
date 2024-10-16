@@ -11,7 +11,7 @@ const fs = require('fs');
 log.transports.file.file = require('os').homedir() + '/SmashSWG-Launcher-log.txt';
 log.transports.file.maxSize = 20 * 1024; // 20KB log file size limit
 log.transports.file.format = '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {text}';
-log.transports.file.archiveLog = (oldLog) => {
+log.transports.file.archiveLogFn = (oldLog) => {
 	log.info(`Archiving log: ${oldLog}`);
 };
 

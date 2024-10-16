@@ -15,6 +15,7 @@ const profcalcBtn = document.getElementById('profcalc');
 const rightContent = document.getElementById('rightcontent');
 const rightSettings = document.getElementById('rightsettings');
 const folderBox = document.getElementById('folder');
+const accountNameBox = document.getElementById('accountName');
 const browseBtn = document.getElementById('browse');
 const installBtn = document.getElementById('install');
 const updateBtn = document.getElementById('update');
@@ -63,12 +64,17 @@ borderlessCheckbox.checked = config.borderless === 1;
 fpsSel.value = config.fps;
 ramSel.value = config.ram;
 zoomSel.value = config.zoom;
+accountNameBox.value = config.accountName || '';
 populateScreenSizeOptions();
 setSelectedScreenSize();
 var needSave = false;
 if (!config.mods) {
 	config.mods = [];
 	needSave = true;
+}
+if (!config.accountName) {
+    config.accountName = '';
+    needSave = true;
 }
 if (!config.vsync) {
 	config.vsync = 0;
@@ -84,6 +90,7 @@ if (!config.windowed) {
 }
 windowedCheckbox.addEventListener('change', () => {
 	config.windowed = windowedCheckbox.checked ? 1 : 0;
+	config.constrainMouse = windowedCheckbox.checked ? true : false;
 	saveConfig();
 });
 if (!config.borderless) {
@@ -92,7 +99,7 @@ if (!config.borderless) {
 }
 borderlessCheckbox.addEventListener('change', () => {
 	config.borderless = borderlessCheckbox.checked ? 1 : 0;
-	config.constrainMouse = borderlessCheckbox.checked ? true : false;
+	config.constrainMouse = borderlessCheckbox.checked ? false : true;
 	saveConfig();
 });
 if (!config.fps) {
@@ -115,6 +122,12 @@ if (needSave) saveConfig();
 minBtn.addEventListener('click', () => ipc.send('minimize-window'));
 closeBtn.addEventListener('click', () => ipc.send('close-window'));
 
+accountNameBox.addEventListener('change', function(e) {
+    config.accountName = e.target.value;
+    console.log('Account name changed to:', e.target.value);
+	saveConfig()
+});
+
 playBtn.addEventListener('click', event => {
 	if (playBtn.disabled)
 		return;
@@ -126,7 +139,7 @@ profcalcBtn.addEventListener('click', function (event) {
 });
 
 function play() {
-	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}\r\nskipIntro=1`);
+	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}\r\nskipIntro=1\r\nloginClientID=${config.accountName}`);
 	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\nwindowed=${config.windowed}\r\nborderlessWindow=${config.borderless}\r\nconstrainMouseCursorToWindow=${config.constrainMouse}\r\n\r\n[ClientUserInterface]\r\ndebugExamine=0\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate=${config.fps}`);
 	var env = Object.create(require('process').env);
 	env.SWGCLIENT_MEMORY_SIZE_MB = config.ram;

@@ -22,6 +22,42 @@
 			outline: 0
 		}
 
+		.settings-container {
+			padding: 10px;
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+		}
+
+		.checkbox-container {
+			display: flex;
+			justify-content: space-between;
+			gap: 10px;
+		}
+
+		.setting-item {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+		}
+
+		.setting-item label {
+			min-width: 100px;
+		}
+
+		.setting-item input[type="text"] {
+			flex-grow: 1;
+			padding: 5px;
+			border: 1px solid #1b4f7b;
+			border-radius: 4px;
+			background-color: #627d9f;
+			color: #000000;
+		}
+
+		.setting-item input[type="checkbox"] {
+			margin-left: 5px;
+		}
+
 		.traybutton {
 			color: #50dcef;
 			background-color: #1b4f7b;
@@ -242,13 +278,25 @@
 		<select id="screenSize" class="right shadow input nodrag" style="top:250px;">
 		</select>
 
-		<div class="right" style="top: 300px; display: flex; align-items: center;">
-			<span>VSync?
-				<input type="checkbox" id="vsync" class="input nodrag" /></span>
-			<span>Window Mode?
-				<input type="checkbox" id="windowed" class="input nodrag" /></span>
-			<span>Borderless?
-				<input type="checkbox" id="borderless" class="input nodrag" /></span>
+		<div class="settings-container right" style="top: 300px;">
+			<div class="checkbox-container">
+				<div class="setting-item">
+					<span>VSync?
+						<input type="checkbox" id="vsync" class="input nodrag" />
+				</div>
+				<div class="setting-item">
+					<span>Window Mode?
+						<input type="checkbox" id="windowed" class="input nodrag" />
+				</div>
+				<div class="setting-item">
+					<span>Borderless?
+						<input type="checkbox" id="borderless" class="input nodrag" />
+				</div>
+			</div>
+			<div class="setting-item">
+				<label for="accountName">Account Name:</label>
+				<input type="text" id="accountName" class="input nodrag" />
+			</div>
 		</div>
 
 		<div class="right" style="bottom:118px;left: 0px;width:15%">RAM</div>
