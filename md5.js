@@ -1,6 +1,5 @@
 const crypto = require('crypto');
 const fs = require('fs');
-const log = require('electron-log');
 
 function md5(file, cb) {
     var hash = crypto.createHash('md5'), 
@@ -11,4 +10,4 @@ function md5(file, cb) {
 
 md5(process.argv[2], console.log);
 
-log.info("Size:", fs.statSync(process.argv[2]).size);
+console.log("Size:", fs.statSync(process.argv[2]).size);

@@ -93,6 +93,16 @@ ipcMain.on('open-profcalc', function () {
 	}
 });
 
+ipcMain.on('minimize-window', (event) => {
+	const win = BrowserWindow.fromWebContents(event.sender);
+	win.minimize();
+});
+
+ipcMain.on('close-window', (event) => {
+	const win = BrowserWindow.fromWebContents(event.sender);
+	win.close();
+});
+
 ipcMain.on('close-launcher', () => {
 	log.info('Closing launcher');
 	app.quit();

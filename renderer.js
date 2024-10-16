@@ -1,6 +1,5 @@
 const ipc = require('electron').ipcRenderer;
 const shell = require('electron').shell;
-const remote = require('electron').remote;
 const log = require('electron-log');
 const fs = require('fs');
 const childProcess  = require('child_process');
@@ -113,8 +112,8 @@ if (!config.zoom) {
 zoomSel.value = config.zoom;
 if (needSave) saveConfig();
 
-minBtn.addEventListener('click', event => remote.getCurrentWindow().minimize());
-closeBtn.addEventListener('click', event => remote.getCurrentWindow().close());
+minBtn.addEventListener('click', () => ipc.send('minimize-window'));
+closeBtn.addEventListener('click', () => ipc.send('close-window'));
 
 playBtn.addEventListener('click', event => {
 	if (playBtn.disabled)
@@ -342,7 +341,7 @@ function enableAll() {
 }
 
 function saveConfig() {
-	log.info("Saving Config")
+	//log.info("Saving Config")
 	fs.writeFileSync(configFile, JSON.stringify(config));
 }
 

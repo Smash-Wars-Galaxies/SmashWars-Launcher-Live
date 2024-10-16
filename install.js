@@ -92,14 +92,14 @@ module.exports.install = function (swgPath, emuPath, mods, install) {
 			if (fileIndex == files.length) {
 				forks.splice(forks.indexOf(fork), 1);
 				fork.kill();
-				log.info("killing fork");
+				console.log("killing fork");
 			}
 			else fork.send(files[fileIndex++]);
 		} else if (message.progress) {
 			completedBytes += message.progress;
 			progress(completedBytes, totalBytes);
 		} else {
-			log.info(JSON.stringify(message));
+			console.log(JSON.stringify(message));
 		}
 	}
 	function progress(completed, total) {
