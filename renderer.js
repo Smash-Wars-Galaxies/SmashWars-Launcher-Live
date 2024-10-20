@@ -76,7 +76,7 @@ if (!config.accountName) {
     config.accountName = '';
     needSave = true;
 }
-if (!config.vsync) {
+if (config.vsync === undefined) {
 	config.vsync = 0;
 	needSave = true;
 }
