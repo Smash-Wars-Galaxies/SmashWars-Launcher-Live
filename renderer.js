@@ -48,6 +48,7 @@ const screenResolutions = [
 	{ width: 1920, height: 1200, experimental: false },
 	{ width: 2560, height: 1080, experimental: false },
 	{ width: 2560, height: 1440, experimental: false },
+	{ width: 2560, height: 1600, experimental: false },
 	{ width: 3440, height: 1440, experimental: false },
 	{ width: 3840, height: 2160, experimental:  true },
 	{ width: 5120, height: 1440, experimental:  true },
@@ -124,7 +125,7 @@ closeBtn.addEventListener('click', () => ipc.send('close-window'));
 
 accountNameBox.addEventListener('change', function(e) {
     config.accountName = e.target.value;
-    console.log('Account name changed to:', e.target.value);
+    log.info('Account name changed to:', e.target.value);
 	saveConfig()
 });
 
@@ -140,7 +141,7 @@ profcalcBtn.addEventListener('click', function (event) {
 
 function play() {
 	fs.writeFileSync(path.join(config.folder, "swgemu_login.cfg"), `[ClientGame]\r\nloginServerAddress0=${server.address}\r\nloginServerPort0=${server.port}\r\nfreeChaseCameraMaximumZoom=${config.zoom}\r\nskipIntro=1\r\nloginClientID=${config.accountName}`);
-	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=false\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\nwindowed=${config.windowed}\r\nborderlessWindow=${config.borderless}\r\nconstrainMouseCursorToWindow=${config.constrainMouse}\r\n\r\n[ClientUserInterface]\r\ndebugExamine=0\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate=${config.fps}`);
+	fs.writeFileSync(path.join(config.folder, "smash.cfg"), `[SwgClient]\r\nallowMultipleInstances=true\r\n\r\n[ClientGraphics]\r\nscreenWidth=${config.screenWidth}\r\nscreenHeight=${config.screenHeight}\r\n\r\nwindowed=${config.windowed}\r\nborderlessWindow=${config.borderless}\r\nconstrainMouseCursorToWindow=${config.constrainMouse}\r\n\r\n[ClientUserInterface]\r\ndebugExamine=0\r\n\r\n[Direct3d9]\r\nallowTearing=${config.vsync}\r\nfullscreenRefreshRate=${config.fps}`);
 	var env = Object.create(require('process').env);
 	env.SWGCLIENT_MEMORY_SIZE_MB = config.ram;
 	try {
@@ -173,6 +174,7 @@ websiteBtn.addEventListener('click', event => shell.openExternal("https://harves
 discordBtn.addEventListener('click', event => shell.openExternal("https://discord.gg/smashley"));
 
 browseBtn.addEventListener('click', function (event) {
+	log.info('Browse button clicked');
 	ipc.send('open-directory-dialog', 'selected-directory');
 });
 
@@ -210,6 +212,7 @@ zoomSel.addEventListener('change', event => {
 installBtn.addEventListener('click', function (event) {
 	if (installBtn.disabled = false) return;
 	installBtn.disabled = true;
+	log.info('Install button clicked')
 	ipc.send('open-directory-dialog', 'install-selected');
 });
 
@@ -354,7 +357,7 @@ function enableAll() {
 }
 
 function saveConfig() {
-	//log.info("Saving Config")
+	log.info("Saving Config")
 	fs.writeFileSync(configFile, JSON.stringify(config));
 }
 
